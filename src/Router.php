@@ -35,13 +35,15 @@ class Router
 		if ($method == Router::GET_METHOD) {
 			$callback = $this->getRoutes[$action];
 		}
+		if ($method == Router::POST_METHOD) {
+			$callback = $this->postRoutes[$action];
+		}
 		echo call_user_func($callback, $params);
 	}
 
 	public function resolveRoute($requestData)
 	{
 		$parametters = null;
-		$route = null;
 		$method = null;
 
 		if ($requestData['REQUEST_METHOD'] == Router::GET_METHOD) {
@@ -53,6 +55,10 @@ class Router
 					$parametters[$splitedQueryString[0]] = $splitedQueryString[1];				
 				}
 			}
+		}
+		if ($requestData['REQUEST_METHOD'] == Router::POST_METHOD) {
+			$method = Router::POST_METHOD;
+			$parametters = $_POST;
 		}
 		$this->dispatch($requestData['PATH_INFO'], $method, $parametters);
 	}
