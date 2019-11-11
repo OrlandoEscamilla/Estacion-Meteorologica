@@ -1,0 +1,11 @@
+{
+    "name": "orlandomalibran/estacion-meteorologica",
+    "type": "project",
+    "license": "GNU GPL V3",
+    "require": {},
+    "autoload": {
+    	"psr-4": {
+    		"EstacionMeteorologica\\":"src/"
+    	}
+    }
+}
