@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.js"></script>
+	<title>Real Time Temperature</title>
+</head>
+<body>
+
+<style type="text/css">
+	.container{width: 70%; margin: 0 auto;}
+</style>
+
+<div class="container">
+	<canvas id="myChart" width="400" height="400"></canvas>
+</div>
+
+
+
+
+
+
+
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+
+<script type="text/javascript">
+
+    function getTimeAJAX() {
+
+        //GUARDAMOS EN UNA VARIABLE EL RESULTADO DE LA CONSULTA AJAX    
+
+        var time = $.ajax({
+
+           		url: 'consultar.php', //indicamos la ruta donde se genera la hora
+                dataType: 'text',//indicamos que es de tipo texto plano
+                async: false     //ponemos el parámetro asyn a falso
+        }).responseText;
+
+        //actualizamos el div que nos mostrará la hora actual
+        document.getElementById("myWatch").innerHTML = "La fecha que hemos obtenido de time.php vía AJAX es: "+time;
+    }
+
+    //con esta funcion llamamos a la función getTimeAJAX cada segundo para actualizar el div que mostrará la hora
+    setInterval(getTimeAJAX,1000);
+
+</script>
+
+
+
+
+
+
+
+<script>
+var ctx = document.getElementById('myChart').getContext('2d');
+
+
+let tiempo = ['10:30', '10:35', '10:40', '10:45', '10:50', '10:55', '11:00'];
+let temperatura = [5, 10, 12, 20, 23, 18, 21];
+
+let colordefondo = [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)',
+                 'rgba(255, 159, 64, 0.2)'
+            ];
+ let colordeborde =  [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)',
+                'rgba(255, 159, 64, 1)'
+            ];
+
+var myChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+        labels: tiempo,
+        datasets: [{
+            label: '# Temperatura',
+            data: temperatura,
+            backgroundColor: colordefondo,
+            borderColor: colordeborde,
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
+    }
+});
+</script>
+
+</body>
+</html>
